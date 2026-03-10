@@ -11,6 +11,8 @@
       pkgs-lib = pkgs.callPackage ./packages/lib.nix {
         psql_15 = self'.packages."psql_15/bin";
         psql_17 = self'.packages."psql_17/bin";
+        psql_age-15 = self'.packages."psql_age-15/bin";
+        psql_age-17 = self'.packages."psql_age-17/bin";
         psql_orioledb-17 = self'.packages."psql_orioledb-17/bin";
         inherit (self.supabase) defaults;
       };
@@ -168,8 +170,12 @@
                 let
                   name = pkg.version;
                 in
+                if lib.hasPrefix "psql_age-15" effectiveLegacyPkgName then
+                  "age-15"
+                else if lib.hasPrefix "psql_age-17" effectiveLegacyPkgName then
+                  "age-17"
                 # Check orioledb first since "17_15" would match "17.*" pattern
-                if builtins.match "17_[0-9]+" name != null then
+                else if builtins.match "17_[0-9]+" name != null then
                   "orioledb-17"
                 else if builtins.match "15.*" name != null then
                   "15"
@@ -560,6 +566,12 @@
           psql_17 = pkgs.runCommand "run-check-harness-psql-17" { } (
             lib.getExe (makeCheckHarness self'.packages."psql_17/bin" { legacyPkgName = "psql_17"; })
           );
+          psql_age-15 = pkgs.runCommand "run-check-harness-psql-age-15" { } (
+            lib.getExe (makeCheckHarness self'.packages."psql_age-15/bin" { legacyPkgName = "psql_age-15"; })
+          );
+          psql_age-17 = pkgs.runCommand "run-check-harness-psql-age-17" { } (
+            lib.getExe (makeCheckHarness self'.packages."psql_age-17/bin" { legacyPkgName = "psql_age-17"; })
+          );
           psql_orioledb-17 = pkgs.runCommand "run-check-harness-psql-orioledb-17" { } (
             lib.getExe (
               makeCheckHarness self'.packages."psql_orioledb-17/bin" { legacyPkgName = "psql_orioledb-17"; }
@@ -570,6 +582,16 @@
           );
           psql_17_slim = pkgs.runCommand "run-check-harness-psql-17-slim" { } (
             lib.getExe (makeCheckHarness self'.packages."psql_17_slim/bin" { legacyPkgName = "psql_17_slim"; })
+          );
+          psql_age-15_slim = pkgs.runCommand "run-check-harness-psql-age-15-slim" { } (
+            lib.getExe (
+              makeCheckHarness self'.packages."psql_age-15_slim/bin" { legacyPkgName = "psql_age-15_slim"; }
+            )
+          );
+          psql_age-17_slim = pkgs.runCommand "run-check-harness-psql-age-17-slim" { } (
+            lib.getExe (
+              makeCheckHarness self'.packages."psql_age-17_slim/bin" { legacyPkgName = "psql_age-17_slim"; }
+            )
           );
           psql_orioledb-17_slim = pkgs.runCommand "run-check-harness-psql-orioledb-17-slim" { } (
             lib.getExe (
