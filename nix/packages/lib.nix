@@ -1,6 +1,8 @@
 {
   psql_17,
   psql_15,
+  psql_age-15,
+  psql_age-17,
   psql_orioledb-17,
   defaults,
   supabase-groonga,
@@ -87,6 +89,8 @@
         PGSQL_SUPERUSER = "${defaults.superuser}";
         PSQL15_BINDIR = "${psql_15}";
         PSQL17_BINDIR = "${psql_17}";
+        PSQLAGE15_BINDIR = "${psql_age-15}";
+        PSQLAGE17_BINDIR = "${psql_age-17}";
         PSQL_CONF_FILE = "${paths.pgconfigFile}";
         POSTGRESQL_CONFIG_DIR = "${postgresqlConfigBaseDir}";
         PSQLORIOLEDB17_BINDIR = "${psql_orioledb-17}";

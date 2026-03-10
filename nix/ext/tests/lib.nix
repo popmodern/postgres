@@ -130,10 +130,11 @@ let
   makeSupabaseTestConfig =
     {
       majorVersion,
+      packageName ? "psql_${majorVersion}",
       postgresPort ? defaultPort,
     }:
     let
-      postgresPackage = self.packages.${system}."psql_${majorVersion}/bin";
+      postgresPackage = self.packages.${system}."${packageName}/bin";
       groongaPackage = self.packages.${system}.supabase-groonga;
       processedConfig = processAnsibleConfig { inherit majorVersion; };
       dataDir = "/var/lib/postgresql/data";
@@ -310,10 +311,12 @@ let
     {
       fromMajorVersion,
       toMajorVersion,
+      fromPackageName ? "psql_${fromMajorVersion}",
+      toPackageName ? "psql_${toMajorVersion}",
     }:
     let
-      oldPkg = self.packages.${system}."psql_${fromMajorVersion}/bin";
-      newPkg = self.packages.${system}."psql_${toMajorVersion}/bin";
+      oldPkg = self.packages.${system}."${fromPackageName}/bin";
+      newPkg = self.packages.${system}."${toPackageName}/bin";
       groongaPackage = self.packages.${system}.supabase-groonga;
       oldDataDir = "/var/lib/postgresql/data";
       newDataDir = "/var/lib/postgresql/data-${toMajorVersion}";

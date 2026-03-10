@@ -1,4 +1,20 @@
 {
+  "age": {
+    "1.5.0": {
+      "postgresql": [
+        "15"
+      ],
+      "rev": "PG15/v1.5.0-rc0",
+      "hash": "sha256-webZWgWZGnSoXwTpk816tjbtHV1UIlXkogpBDAEL4gM="
+    },
+    "1.7.0": {
+      "postgresql": [
+        "17"
+      ],
+      "rev": "PG17/v1.7.0-rc0",
+      "hash": "sha256-hAjhNj/benwZbbuxDl9RSjwWRai9CUozbEN6ecPKoFE="
+    }
+  },
   "http": {
     "1.5.0": {
       "postgresql": [

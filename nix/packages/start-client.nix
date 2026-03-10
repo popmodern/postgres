@@ -2,6 +2,8 @@
   writeShellApplication,
   psql_15,
   psql_17,
+  psql_age-15,
+  psql_age-17,
   psql_orioledb-17,
   defaults,
 }:
@@ -19,7 +21,7 @@ writeShellApplication {
         echo "Usage: nix run .#start-client -- [options]"
         echo
         echo "Options:"
-        echo "  -v, --version [15|17|orioledb-17]  Specify the PostgreSQL version to use (default: 15)"
+        echo "  -v, --version [15|17|age-15|age-17|orioledb-17]  Specify the PostgreSQL version to use (default: 15)"
         echo "  -u, --user USER                     Specify the user/role to use (default: postgres)"
         echo "  -p, --port PORT                     Specify the port (default: ${defaults.port})"
         echo "  -h, --help                          Show this help message"
@@ -43,7 +45,7 @@ writeShellApplication {
                     PSQL_VERSION="$2"
                     shift 2
                 else
-                    echo "Error: --version requires an argument (15, 17, or orioledb-17)"
+                    echo "Error: --version requires an argument (15, 17, age-15, age-17, or orioledb-17)"
                     exit 1
                 fi
                 ;;
@@ -84,11 +86,17 @@ writeShellApplication {
     elif [ "$PSQL_VERSION" == "17" ]; then
         echo "Starting client for PSQL 17"
         BINDIR="${psql_17}"
+    elif [ "$PSQL_VERSION" == "age-15" ]; then
+        echo "Starting client for PSQL AGE 15"
+        BINDIR="${psql_age-15}"
+    elif [ "$PSQL_VERSION" == "age-17" ]; then
+        echo "Starting client for PSQL AGE 17"
+        BINDIR="${psql_age-17}"
     elif [ "$PSQL_VERSION" == "orioledb-17" ]; then
         echo "Starting client for PSQL ORIOLEDB 17"
         BINDIR="${psql_orioledb-17}"
     else
-        echo "Please provide a valid Postgres version (15, 17, or orioledb-17)"
+        echo "Please provide a valid Postgres version (15, 17, age-15, age-17, or orioledb-17)"
         exit 1
     fi
 

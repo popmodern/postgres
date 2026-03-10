@@ -52,11 +52,20 @@
         ../ext/plv8
       ];
 
-      #Where we import and build the orioledb extension, we add on our custom extensions
-      # plus the orioledb option
-      #we're not using timescaledb or plv8 in the orioledb-17 version or pg 17 of supabase extensions
+      ageExtensions15 = ourExtensions ++ [ ../ext/age.nix ];
+      ageExtensions17 = dbExtensions17 ++ [ ../ext/age.nix ];
+
+      # Where we import and build the orioledb extension, we add on our custom extensions
+      # plus the orioledb option.
+      #
+      # Apache AGE is intentionally excluded here. AGE ships as dedicated age-15
+      # and age-17 bundle variants, not as part of the OrioleDB flavor.
+      # We're also not using timescaledb or plv8 in the orioledb-17 version or pg 17.
       orioleFilteredExtensions = builtins.filter (
-        x: x != ../ext/timescaledb.nix && x != ../ext/timescaledb-2.9.1.nix && x != ../ext/plv8
+        x:
+        x != ../ext/timescaledb.nix
+        && x != ../ext/timescaledb-2.9.1.nix
+        && x != ../ext/plv8
       ) ourExtensions;
 
       orioledbExtensions = orioleFilteredExtensions ++ [ ../ext/orioledb.nix ];
@@ -125,6 +134,13 @@
           extensionsToUse =
             if variant == "cli" then
               cliExtensions
+            else if variant == "age" then
+              if version == "15" then
+                ageExtensions15
+              else if version == "17" then
+                ageExtensions17
+              else
+                throw "Apache AGE bundle variants are only supported for PostgreSQL 15 and 17"
             else if (builtins.elem version [ "orioledb-17" ]) then
               orioledbExtensions
             else if (builtins.elem version [ "17" ]) then
@@ -230,11 +246,21 @@
       basePackages = {
         psql_15 = makePostgres "15" { };
         psql_17 = makePostgres "17" { };
+        psql_age-15 = makePostgres "15" { variant = "age"; };
+        psql_age-17 = makePostgres "17" { variant = "age"; };
         psql_orioledb-17 = makePostgres "orioledb-17" { };
       };
       slimPackages = {
         psql_15_slim = makePostgres "15" { latestOnly = true; };
         psql_17_slim = makePostgres "17" { latestOnly = true; };
+        psql_age-15_slim = makePostgres "15" {
+          variant = "age";
+          latestOnly = true;
+        };
+        psql_age-17_slim = makePostgres "17" {
+          variant = "age";
+          latestOnly = true;
+        };
         psql_orioledb-17_slim = makePostgres "orioledb-17" { latestOnly = true; };
       };
 
