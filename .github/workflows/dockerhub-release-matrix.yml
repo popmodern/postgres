@@ -21,7 +21,7 @@ jobs:
       matrix_config: ${{ steps.set-matrix.outputs.matrix_config }}
     steps:
       - name: Checkout Repo
-        uses: supabase/postgres/.github/actions/shared-checkout@HEAD
+        uses: popmodern/postgres/.github/actions/shared-checkout@HEAD
       - uses: ./.github/actions/nix-install-ephemeral
       - name: Generate build matrix
         id: set-matrix
@@ -54,7 +54,7 @@ jobs:
       build_args: ${{ steps.args.outputs.result }}
     steps:
       - name: Checkout Repo
-        uses: supabase/postgres/.github/actions/shared-checkout@HEAD
+        uses: popmodern/postgres/.github/actions/shared-checkout@HEAD
       - uses: ./.github/actions/nix-install-ephemeral
       - name: Set PostgreSQL version environment variable
         run: echo "POSTGRES_MAJOR_VERSION=${{ matrix.version }}" >> $GITHUB_ENV
@@ -79,7 +79,7 @@ jobs:
     timeout-minutes: 180
     steps:
       - name: Checkout Repo
-        uses: supabase/postgres/.github/actions/shared-checkout@HEAD
+        uses: popmodern/postgres/.github/actions/shared-checkout@HEAD
       - uses: ./.github/actions/nix-install-ephemeral
       - run: docker context create builders
       - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3.12.0
@@ -102,7 +102,7 @@ jobs:
               }
               open ansible/vars.yml | get postgres_release | get $release_key | str trim
             ')
-            echo "pg_version=supabase/postgres:$pg_version" >> $GITHUB_OUTPUT
+            echo "pg_version=popmodern/postgres:$pg_version" >> $GITHUB_OUTPUT
           else
             pg_version=$(nix run nixpkgs#nushell -- -c '
               let version = "${{ matrix.postgres.version }}"
@@ -113,7 +113,7 @@ jobs:
               }
               open ansible/vars.yml | get postgres_release | get $release_key | str trim
             ')
-            echo "pg_version=supabase/postgres:$pg_version" >> $GITHUB_OUTPUT
+            echo "pg_version=popmodern/postgres:$pg_version" >> $GITHUB_OUTPUT
           fi
       - id: build
         uses: docker/build-push-action@ca052bb54ab0790a636c9b5f226502c73d547a25 # v5.4.0
@@ -135,7 +135,7 @@ jobs:
     runs-on: large-linux-x86
     steps:
       - name: Checkout Repo
-        uses: supabase/postgres/.github/actions/shared-checkout@HEAD
+        uses: popmodern/postgres/.github/actions/shared-checkout@HEAD
       - uses: ./.github/actions/nix-install-ephemeral
       - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3.12.0
       - uses: docker/login-action@465a07811f14bebb1938fbed4728c6a1ff8901fc # v2.2.0
@@ -153,7 +153,7 @@ jobs:
               $"postgres($version)"
             }
             let pg_version = (open ansible/vars.yml | get postgres_release | get $release_key | str trim)
-            $"pg_version=supabase/postgres:($pg_version)" | save --append $env.GITHUB_OUTPUT
+            $"pg_version=popmodern/postgres:($pg_version)" | save --append $env.GITHUB_OUTPUT
           '
       - name: Output version
         id: output_version
@@ -179,7 +179,7 @@ jobs:
     runs-on: large-linux-x86
     steps:
       - name: Checkout Repo
-        uses: supabase/postgres/.github/actions/shared-checkout@HEAD
+        uses: popmodern/postgres/.github/actions/shared-checkout@HEAD
       - uses: ./.github/actions/nix-install-ephemeral
 
       - name: Debug Input from Prepare
@@ -223,7 +223,7 @@ jobs:
                 | where { |line| $line != "" }        # Filter empty lines
                 | each { |line| 
                     # Extract just the version part after the last colon
-                    let version = ($line | parse "supabase/postgres:{version}" | get version.0)
+                    let version = ($line | parse "popmodern/postgres:{version}" | get version.0)
                     {version: $version}
                 }
               )

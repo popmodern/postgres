@@ -74,8 +74,8 @@ jobs:
         run: |
           DOCKERFILE="Dockerfile-${{ matrix.pg_version }}"
           echo "Building $DOCKERFILE..."
-          # Tag with ECR prefix since CLI uses public.ecr.aws/supabase/postgres as base
-          docker build -f "$DOCKERFILE" -t "public.ecr.aws/supabase/postgres:${{ matrix.pg_version }}" .
+          # Tag with ECR prefix since CLI uses public.ecr.aws/popmodern/postgres as base
+          docker build -f "$DOCKERFILE" -t "public.ecr.aws/popmodern/postgres:${{ matrix.pg_version }}" .
 
       - name: Run CLI smoke test
         run: |
