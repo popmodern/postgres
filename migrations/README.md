@@ -1,6 +1,6 @@
 # Usage
 
-from the root of the `supabase/postgres` project, you can run the following commands:
+from the root of the `popmodern/postgres` project, you can run the following commands:
 
 
 ```shell
@@ -25,17 +25,17 @@ Examples:
 This can also be run from a github "flake url" for example:
 
 ```shell
-nix run github:supabase/postgres#dbmate-tool -- --version 15
+nix run github:popmodern/postgres#dbmate-tool -- --version 15
 
 or
 
-nix run github:supabase/postgres/mybranch#dbmate-tool -- --version 15
+nix run github:popmodern/postgres/mybranch#dbmate-tool -- --version 15
 ```
 # supabase/migrations
 
 `supabase/migrations` is a consolidation of SQL migrations from:
 
-- supabase/postgres
+- popmodern/postgres
 - supabase/supabase
 - supabase/cli
 - supabase/platform (internal)
