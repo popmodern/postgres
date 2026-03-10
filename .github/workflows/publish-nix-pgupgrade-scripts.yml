@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - develop
+      - add-apache-age
       - release/*
     paths:
       - '.github/workflows/publish-nix-pgupgrade-scripts.yml'
@@ -79,7 +80,7 @@ jobs:
   publish-prod:
     needs: prepare
     runs-on: large-linux-x86
-    if: github.ref_name == 'develop' || startsWith(github.ref_name, 'release/')
+    if: github.ref_name == 'add-apache-age' || startsWith(github.ref_name, 'release/')
 
     strategy:
       matrix:

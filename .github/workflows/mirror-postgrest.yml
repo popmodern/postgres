@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - develop
+      - add-apache-age
     paths:
       - ".github/workflows/mirror-postgrest.yml"
       - "ansible/vars.yml"

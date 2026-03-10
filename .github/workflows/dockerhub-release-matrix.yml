@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - develop
+      - add-apache-age
       - release/*
     paths:
       - ".github/workflows/dockerhub-release-matrix.yml"

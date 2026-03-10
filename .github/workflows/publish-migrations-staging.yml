@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - develop
+      - add-apache-age
   workflow_dispatch:
 
 jobs:

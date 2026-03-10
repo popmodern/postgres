@@ -14,8 +14,8 @@ jobs:
     steps:
       - name: Guard
         run: |
-          if [ $GITHUB_REF != 'refs/heads/develop' ]; then
-            echo "This action can only be run on the develop branch"
+          if [ $GITHUB_REF != 'refs/heads/add-apache-age' ]; then
+            echo "This action can only be run on the add-apache-age branch"
             exit 1
           fi
         env:

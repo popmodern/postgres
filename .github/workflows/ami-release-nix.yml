@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - develop
+      - add-apache-age
       - release/*
     paths:
       - '.github/workflows/ami-release-nix.yml'

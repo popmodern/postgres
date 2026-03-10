@@ -6,6 +6,7 @@ reviews:
     drafts: false
     base_branches:
       - develop
+      - add-apache-age
   changed_files_summary: false
   high_level_summary: true
   poem: false

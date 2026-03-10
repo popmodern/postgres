@@ -6,6 +6,7 @@ on:
   push:
     branches:
       - develop
+      - add-apache-age
       - release/*
   workflow_call:
     secrets:

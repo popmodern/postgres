@@ -8,7 +8,7 @@ on:
       branch:
         description: 'Branch to build from'
         required: false
-        default: 'develop'
+        default: 'add-apache-age'
         type: string
 
 permissions:
@@ -24,7 +24,7 @@ jobs:
       - name: Checkout Repo
         uses: popmodern/postgres/.github/actions/shared-checkout@HEAD
         with:
-          ref: ${{ github.event.inputs.branch || 'develop' }}
+          ref: ${{ github.event.inputs.branch || 'add-apache-age' }}
 
       - name: Install nix (ephemeral)
         uses: ./.github/actions/nix-install-ephemeral
