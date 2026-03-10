@@ -64,7 +64,7 @@
   block:
     - name: Install packages from nix binary cache
       ansible.builtin.shell: |
-        sudo -u postgres bash -c ". /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh && nix profile install github:supabase/postgres/{{ git_commit_sha }}#{{ nix_item }}"
+        sudo -u postgres bash -c ". /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh && nix profile install github:popmodern/postgres/{{ git_commit_sha }}#{{ nix_item }}"
       loop:
         - "{{ psql_version }}/bin"
         - pg_prove
@@ -76,7 +76,7 @@
 
     - name: Install supascan for baseline validation
       ansible.builtin.shell: |
-        sudo -u ubuntu bash -c ". /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh && nix profile install github:supabase/postgres/{{ git_commit_sha }}#supascan"
+        sudo -u ubuntu bash -c ". /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh && nix profile install github:popmodern/postgres/{{ git_commit_sha }}#supascan"
 
     - name: nix collect garbage after supascan install
       ansible.builtin.shell:
@@ -137,7 +137,7 @@
             - name: Install gatekeeper from nix binary cache
               become: yes
               shell: |
-                sudo -u postgres bash -c ". /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh && nix profile install github:supabase/postgres/{{ git_commit_sha }}#gatekeeper"
+                sudo -u postgres bash -c ". /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh && nix profile install github:popmodern/postgres/{{ git_commit_sha }}#gatekeeper"
 
             - name: Create symbolic link for linux-pam to find pam_jit_pg.so
               become: yes
